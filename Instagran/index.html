@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #fafafa;
+    }
+    .login-container {
+      margin-top: 10%;
+    }
+    .card {
+      padding: 2rem;
+      border: 1px solid #dbdbdb;
+    }
+    .login-form input {
+      margin-bottom: 0.5rem;
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 1rem 0;
+    }
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: #dbdbdb;
+    }
+    .divider::before {
+      margin-right: 0.5rem;
+    }
+    .divider::after {
+      margin-left: 0.5rem;
+    }
+    .footer {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+    .footer a {
+      color: #00376b;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container login-container">
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6">
+        <figure>
+            <img src="images/screenshot4.png" alt="">
+        </figure>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card">
+        <h1 class="text-center mb-4">Instagram</h1>
+        
+        <form class="login-form">
+          <div class="mb-3">
+            <input type="email" class="form-control" placeholder="Numero de telefone movel, nome de utilizador ou email" required>
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" placeholder="Palavra-passe" required>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Iniciar Sessao</button>
+          </div>
+        </form>
+
+        <div class="divider">
+          <span>OU</span>
+        </div>
+
+        <div class="text-center mb-3">
+          <a href="#" class="text-decoration-none text-primary">
+            <img style="max-width: 0.5rem;" src="images/facebook-f-brands-solid.svg" alt="">
+            <strong>Iniciar sessao Facebook</strong></a>
+        </div>
+        <div class="text-center">
+          <a href="#" class="text-decoration-none">Esqueceu a senha?</a>
+        </div>
+      </div>
+
+      <div class="card mt-3 text-center">
+        <div class="p-3">
+          Nao tem uma conta? <a href="#">Registrar-se</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>
+      <a href="#">Sobre</a> · <a href="#">Help</a> · <a href="#">Press</a> · <a href="#">API</a> · <a href="#">Jobs</a> · <a href="#">Privacy</a> · <a href="#">Terms</a>
+    </p>
+    <p>© 2024 Instagram from Meta</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
