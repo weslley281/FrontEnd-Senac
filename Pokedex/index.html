@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .pokemon-card {
+      width: 18rem;
+      transition: transform 0.2s;
+    }
+
+    .pokemon-card:hover {
+        transform: scale(1.05);
+        cursor: pointer;
+    }
+
+    .pokemon-image {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Pokédex</h1>
+    <!-- Pokemon Cards -->
+    <div class="row bg-success" id="pokemon-container"></div>
+
+    <!-- Modal para Detalhes do Pokémon -->
+    <div class="modal fade" id="pokemonModal" tabindex="-1" aria-labelledby="pokemonModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="pokemonModalLabel">Detalhes do Pokémon</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body" id="pokemon-details">
+            <!-- Detalhes do Pokémon serão inseridos aqui via JavaScript -->
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- JavaScript para consumir a API e manipular o DOM -->
+  <script>
+    // Função para buscar dados do Pokémon pela PokéAPI
+    async function fetchPokemon(id) {
+      try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        return await response.json();
+      } catch (error) {
+        console.error("Erro ao buscar dados do Pokémon:", error);
+      }
+    }
+
+    // Função para renderizar os cartões dos Pokémon
+    async function renderPokemons(start = 1, end = 200) {
+        const pokemonContainer = document.getElementById('pokemon-container');
+        pokemonContainer.innerHTML = '';
+  
+        for (let i = start; i <= end; i++) {
+          const pokemon = await fetchPokemon(i);
+  
+          const pokemonCard = document.createElement('div');
+
+          pokemonCard.classList.add("bg-light", "col-lg-3", 'col-md-3', "col-sm-6", "col-12");
+
+          pokemonCard.innerHTML = `
+            <div class="my-2 mx-2 h-auto w-100 card pokemon-card shadow-sm rounded-lg" onclick="showPokemonDetails(${pokemon.id})">
+                <div class="bg-warning rounded-lg">
+                    <img src="${pokemon.sprites.front_default}" class="card-img-top pokemon-image rounded-lg" alt="${pokemon.name}">
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title text-capitalize">${pokemon.name}</h5>
+                    <p class="card-text">ID: ${pokemon.id}</p>
+                    <p class="card-text">Tipo: ${pokemon.types.map(type => type.type.name).join(', ')}</p>
+                </div>
+            </div>
+          `;
+
+          pokemonContainer.appendChild(pokemonCard);
+        }
+      }
+
+    // Função para mostrar detalhes do Pokémon no modal
+    async function showPokemonDetails(id) {
+        const pokemon = await fetchPokemon(id);
+        const modalBody = document.getElementById('pokemon-details');
+  
+        modalBody.innerHTML = `
+          <div class="text-center">
+            <img src="${pokemon.sprites.front_default}" class="pokemon-image mb-3" alt="${pokemon.name}">
+          </div>
+          <h5 class="text-capitalize text-center">${pokemon.name}</h5>
+          <p class="text-center">ID: ${pokemon.id}</p>
+          <p><strong>Tipos:</strong> ${pokemon.types.map(type => type.type.name).join(', ')}</p>
+          <p><strong>Altura:</strong> ${(pokemon.height / 10).toFixed(1)} m</p>
+          <p><strong>Peso:</strong> ${(pokemon.weight / 10).toFixed(1)} kg</p>
+          <p><strong>Habilidades:</strong> ${pokemon.abilities.map(ability => ability.ability.name).join(', ')}</p>
+        `;
+        
+        $('#pokemonModal').modal('show'); // Exibe o modal com os detalhes do Pokémon
+      }
+
+    // Inicializa a Pokédex com os primeiros Pokémon
+    document.addEventListener('DOMContentLoaded', () => renderPokemons(1, 200));
+  </script>
+
+  <!-- Link para o Bootstrap JS (opcional para funcionalidades adicionais) -->
+  <!-- Bootstrap JS (opcional para funcionalidades adicionais) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
